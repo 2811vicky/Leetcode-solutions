@@ -1,0 +1,63 @@
+// Based on DIGIT DP problem 
+
+class Solution {
+public:
+     int dp[10][2][1024];
+         int dfs(int pos,int allow,int mask,string s)
+         {
+             if (pos == s.size())
+            {
+            
+              if (mask != 0) {
+                return 1;
+            }
+            return 0;
+            }
+             if(dp[pos][allow][mask]!=-1)
+                 return dp[pos][allow][mask];
+             int ans=0;
+             
+             if(allow==1)
+             {
+                    
+                for(int i=0;i<=s[pos]-'0';i++)
+                {
+                    if(mask&(1<<i))
+                        continue;
+                  int newmask = (mask==0 && i==0) ? mask : mask|(1<<i);
+                    
+                    if(i==s[pos]-'0')
+                        ans+=dfs(pos+1,1,newmask,s);
+                    else
+                        ans+=dfs(pos+1,0,newmask,s);
+                }
+                 
+             }
+             else
+             {
+                 for(int i=0;i<=9;i++)
+                 {
+                     if(mask& (1<<i))
+                         continue;
+                    int newmask = (mask==0 && i==0) ? mask : mask|(1<<i);
+                     ans+=dfs(pos+1,0,newmask,s);
+                 }
+                 
+             }
+             return dp[pos][allow][mask]=ans;
+             
+         }
+       
+    int countSpecialNumbers(int n) {
+           string s=to_string(n);
+            for(int i=0;i<10;i++)
+            {
+                for(int j=0;j<2;j++)
+                {
+                        for(int k=0;k<1024;k++)
+                         dp[i][j][k]=-1;
+                }
+            }
+          return dfs(0,1,0,s);
+    }
+};

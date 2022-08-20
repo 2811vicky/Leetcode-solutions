@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+           priority_queue<int> pq;
+           int steps=0;
+           int currst=0;
+           int n=stations.size();
+        while(startFuel<target)
+        {
+             while(currst<n && stations[currst][0]<=startFuel)
+             {
+                   pq.push(stations[currst][1]);
+                    currst++;
+             }
+            if(pq.empty())
+                return -1;
+            startFuel+=pq.top();
+                pq.pop();
+            steps++;
+            
+        }
+        return steps;
+    }
+};

@@ -1,0 +1,16 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& v) {
+        // this is way to get transpose of matrix and then revese it;
+         for(int i=0;i<v.size();i++)
+         {
+             for(int j=0;j<i;j++)
+             {
+                 swap(v[i][j],v[j][i]);
+             }
+         }
+        for(int i=0;i<v.size();i++)
+        reverse(v[i].begin(),v[i].end());
+        return ;
+    }
+};
